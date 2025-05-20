@@ -8,17 +8,21 @@ int main() {
 
   state = OUT;
   while ((c = getchar()) != EOF) {
-    if (c == ' ' || c == '\t' || c == '\n')
-      state = OUT;
+    if (c == ' ' || c == '\t' || c == '\n') {
+      if (state == IN) {
+        putchar('\n');
+        state = OUT;
+      }
+    }
     else {
       if (state == OUT) {
         state = IN;
-        putchar ('\n');
-      }
-      putchar(c);
+        putchar(c);
+      } else
+        putchar(c);
     }
   }
-  putchar('\n');
+  // putchar('\n');
 }
 
 /*
@@ -27,3 +31,5 @@ Under first if, checks for state = in to put newline at finish of word and chang
 I print newline then first char at start or word, requiring extra \n at the end.
 Actually, realized mine adds extra line before first word as well. Bug!
 */
+
+/* fixing logic for 2nd commit */
