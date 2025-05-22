@@ -3,17 +3,12 @@
 #define IN 1
 #define OUT 0
 #define MAXSIZE 20  // # of word sizes to track. over this goes in 'more' bucket
+#define MAXHIST 30 // max length of histogram bar
 
-/* draw histogram of the lengths of words of input
-pseudo:
-use same in/out of word logic
-count length of each word
-at end of word, add 1 to corresponding array element
-for each element, loop and output character to make bar
-*/
+/* draw histogram of the lengths of words of input */
 
 int main() {
-  int x, c, nc, state, totals[MAXSIZE], more;
+  int x, c, nc, state, totals[MAXSIZE], more, len, maxvalue;
 
   state = OUT;
   nc = more = 0;
@@ -22,13 +17,12 @@ int main() {
 
   while ((c = getchar()) != EOF) {
     if (c == ' ' || c == '\t' || c == '\n') {
-      if (state == IN) {
-        if (nc <= MAXSIZE)   // could also check for >=0 for safety)
-          ++totals[nc-1];
+      if (state == IN) {  // book answer uses if (nc > 0). different? seems maybe IN state corresponds to nc > 0, and OUT nc == 0.
+        if (nc < MAXSIZE)
+          ++totals[nc];
         else
           ++more;
         state = OUT;
-        // printf("%d ", nc);
         nc = 0;
       }
     } else {
@@ -38,21 +32,27 @@ int main() {
     }
   }
 
-  // for (x = 0; x < MAXSIZE; ++x) {
-  //   printf("%d: %d\n", x+1, totals[x]);
-  // }
-  // printf("over: %d\n", more);
-
-  for (x = 0; x < MAXSIZE; ++x) {
-    printf("%2d | ", x+1);
-    for (c = 0; c < totals[x]; ++c)
-      putchar('#');
+  //maxvalue from answer book
+  maxvalue = 0; 
+  for (x = 1; x < MAXSIZE; ++x)
+    if (totals[x] > maxvalue)
+      maxvalue = totals[x];
+    
+  for (x = 1; x < MAXSIZE; ++x) {
+    printf("%5d - %5d : ", x, totals[x]);
+    if (totals[x] > 0) {
+      if ((len = totals[x] * MAXHIST / maxvalue) <= 0) // is this sign backwards? no, I don't understand this ratio
+        len = 1;
+    } else
+      len = 0;
+    while (len > 0) {
+      putchar('*');
+      --len;
+    }
     putchar('\n');
   }
-  printf(" + | ");
-  for (c = 0; c < more; ++c)
-    putchar('#');
-  putchar('\n');
+  if (more > 0)
+    printf("There are %d words with %d characters or more.\n", more, MAXSIZE);
 }
 
 /*
