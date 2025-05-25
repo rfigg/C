@@ -53,3 +53,8 @@ int trim(char line[])
 }
 
 /* Fascinating, return and side effect functions happily not oop */
+/* Book answer does things differently, returning -1 for no line or size including \n
+where mine returns zero for no line, and size without \n. Seems to not matter since
+value isn't used beyond >0 to print.
+Mine does do more writes to memory and leave a trail of null characters. Maybe this
+is bad form? */
