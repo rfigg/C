@@ -12,11 +12,13 @@ int main()
   char line[MAXLINE], longest[MAXLINE];
 
   max = 0;
-  while ((len = mygetline(line, MAXLINE)) > 0)
+  while ((len = mygetline(line, MAXLINE)) > 0) {
+    printf("%d, %s", len, line);
     if (len > max) {
       max = len;
       copy(longest, line);
     }
+  }
   printf("Length: %d\n", max);
   if (max > 0)
     printf("%s", longest);
@@ -25,15 +27,20 @@ int main()
 
 int mygetline(char s[], int lim)
 {
-  int c, i;
+  int c, i, j;
 
-  for (i=0; i<lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
-    s[i] = c;
-  if (c == '\n') {
-    s[i] = c;
+  j = 0;
+  for (i=0; (c=getchar())!=EOF && c!='\n'; ++i)
+    if (i < lim-2) {
+      s[j] = c; //copy and increment j only until limit while i keeps counting
+      ++j;
+    }
+  if (c == '\n') { //if file ends on newline, add newline and increment for null char termination
+    s[j] = c;
     ++i;
+    ++j;
   }
-  s[i] = '\0';
+  s[j] = '\0';
   return i;
 }
 
@@ -47,3 +54,7 @@ void copy(char to[], char from[])
 }
 
 /* troubleshooting confilct with 'getline' name. apparently conflict with stdio.h */
+/* misunderstood question. want to print length and text of each line, and longest at end.
+Also question only specifies modify main routine, answer modifies getline like I thought.
+Uses second counter in getline along with loop i to track position in array, stop at limit,
+and keep counting with i. Leaves space for newline and null char or just null char.*/
