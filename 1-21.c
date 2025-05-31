@@ -1,87 +1,43 @@
 #include <stdio.h>
-#define MAXLINE 1000
-#define TAB 4
-//#define INSPACE 1
-//#define OUTSPACE 0
+#define TAB 5
 /*
 Replace strings of blanks with minimum number of tabs and blanks for same spacing.
 */
 
-void entab(char s[], int t);    // replaces consecutive spaces with tabs where possible
-int mygetline(char line[], int max);    // get a line with max length 
-
 int main()
 {
-    char line[MAXLINE];
+    int c, nblanks, ntabs, pos;
 
-    while ( (mygetline(line, MAXLINE)) > 0 ) {
-        entab(line, TAB);
-        printf("%s", line);
-    }
-    return 0;
-}
-
-void entab(char line[], int tab)  // try modulo math method for practice
-{
-    int i, j;    //source position, dest position (same string)
-    int nspaces;
-    int nexttab;
-
-    nexttab = tab;
-    i = j = 0;
-    nspaces = 0;
-    while ( line[i] != '\0') {  // while not at end of string
-        if ( line[i] == ' ') {  // if a space, count a space and move source pointer forward
-            ++nspaces;
-            ++i;
-        } else if ( nspaces == 0 ) {    //if a char, and no spaces yet, add char at j, incr i and j
-            line[j] = line[i];
-            ++i;
-            ++j;
-        } else if ( nspaces > 0 ) {  //if a char and nspaces > 0 (start of a word), loop adding tabs and spaces at j
-            while ( (nspaces / tab) > 0 ) { //  nspaces / tab = # of tabs
-                line[j] = '\t';
-                nspaces -= tab;
-                ++j;
-            }
-            while ( (nspaces % tab) > 0) {  //  npsaces % tab = spaces at end
-                line[j] = ' ';
-                --nspaces;
-                ++j;
+    nblanks = ntabs = 0;
+    for (pos = 1; (c = getchar()) != EOF; ++pos)
+        if (c == ' ') {
+            if (pos % TAB != 0)
+                ++nblanks;
+            else {
+                nblanks = 0;
+                ++ntabs;
             }
         } else {
-            //you shouldn't be here
+            while (ntabs > 0) {  // write out tabs. book used concise for loop without 1st clause
+                putchar('\t');
+                --ntabs;
+            }
+            if (c == '\t')  // if last char was a tab, ignore spaces and add tab later
+                nblanks = 0;
+            while (nblanks > 0) {  // write remaining spaces. book uses else and another concise for loop
+                putchar(' ');
+                --nblanks;
+            }
+            putchar(c);
+            if (c == '\n')
+                pos = 0;  // confused me why zero based? loop with add 1
+            if (c == '\t')  // book has this after else, saves one comparison i guess
+                pos += (TAB - (pos-1) % TAB) - 1;  // did same to me here. t-(p-1)%t is the correct number of spaces, then subtract one more anticipating loop increment
         }
-    }
-    while ( nspaces / tab > 0 ) {   // handle trailing spaces
-        line[j] = '\t';
-        nspaces -= tab;
-        ++j;
-    }
-    while ( nspaces % tab > 0 ) {
-        line[j] = ' ';
-        --nspaces;
-        ++j;
-    }
-    line[j] = '\0';
-    
-    return; // void? new length?
-}
-
-int mygetline(char line[], int max)
-{
-    int c, i;
-
-    for (i=0; i<max-1 && (c=getchar())!=EOF && c!='\n'; ++i)
-        line[i] = c;
-    if (c == '\n') {
-        line[i] = c;
-        ++i;
-    }
-    line[i] = '\0';
-    return i;
 }
 
 /*
-
+Book answer much simpler, not sure why I overcomplicated this after last one.
+No need for string variables or functions, just get and put chars.
+Seems to fail on input of all spaces, no newline. main else never reached, no output.
 */
