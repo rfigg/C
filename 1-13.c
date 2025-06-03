@@ -41,7 +41,7 @@ int main() {
   for (x = 1; x < MAXSIZE; ++x) {
     printf("%5d - %5d : ", x, totals[x]);
     if (totals[x] > 0) {
-      if ((len = totals[x] * MAXHIST / maxvalue) <= 0) // is this sign backwards? no, I don't understand this ratio
+      if ((len = totals[x] * MAXHIST / maxvalue) <= 0) // is this sign backwards? no, I dont understand this ratio
         len = 1;
     } else
       len = 0;
