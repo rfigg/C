@@ -92,5 +92,10 @@ void count_char(int c) {
 First attempt
 Mostly worked, caught another single quote in double slash comments.
 Fixed and seems to work now.
+Checking book answer: Avoids unnecessary recursion like I started with.
+Some details identical.
+Main thing I missed, they check for negative count in main loop and print error and reset count
+to avoid passing test with )))(((. At end error is reported for positive count mismatch.
+Also, example does not initialize external variables. Turns out these are defaulted to zero here.
 */
 
