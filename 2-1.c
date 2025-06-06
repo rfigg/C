@@ -10,21 +10,29 @@ Hint: limits.h and float.h
 */
 
 int main() {
-    long int li;
-
     printf("Signed char min, max: %5d,%5d\n", SCHAR_MIN, SCHAR_MAX);
-    printf("Range: %d\n", SCHAR_MAX - SCHAR_MIN);
-    printf("Unsigned char min, max: %5d,%5d\n", 0, UCHAR_MAX);
-    printf("Range: %d\n", UCHAR_MAX - 0);
+    printf("Unsigned char min, max: %5u,%5u\n", 0, UCHAR_MAX);
     printf("Signed short min, max: %5d,%5d\n", SHRT_MIN, SHRT_MAX);
-    printf("Range: %d\n", SHRT_MAX - SHRT_MIN);
-    printf("Unsigned short min, max: %5d,%5d\n", 0, USHRT_MAX);
-    printf("Range: %d\n", USHRT_MAX - 0);
+    printf("Unsigned short min, max: %5u,%5u\n", 0, USHRT_MAX);
     printf("Signed int min, max: %5d,%5d\n", INT_MIN, INT_MAX);
-    li = INT_MAX - INT_MIN;
-    printf("Range: %ld\n", li);
-    printf("Unsigned int min, max: %5d,%5d\n", 0, UINT_MAX);
-    printf("Range: %d\n", UINT_MAX - 0);
+    printf("Unsigned int min, max: %5u,%5u\n", 0, UINT_MAX);
+    printf("Signed long min, max: %5ld, %5ld\n", LONG_MIN, LONG_MAX);
+    printf("Unsigned long min, max: %5lu, %5lu\n", 0, ULONG_MAX);
+    
+    /* a few examples of finding limits with bit shifts */
+    printf("No cheating signed char min: %d\n", ~(char)((unsigned char) ~0 >> 1));
+    printf("No cheating signed int max: %d\n", (int)((unsigned int) ~0 >> 1));
+    printf("No cheating signed long int min: %ld\n", ~(long int)((unsigned long int) ~0 >> 1));
+    printf("No cheating unsigned short max: %u\n", (unsigned short) ~0);
+    printf("No cheating unsigned long max: %lu\n", (unsigned long) ~0);
     
     return 0;
 }
+
+/*
+First attempt had overflows, trying to put in bigger vars seems wrong.
+Just use correct printf format specifiers.
+Bit shifts don't seem to work.
+Answer book pdf looked like negative signs. Learned about bitwise NOT operator.
+
+*/
