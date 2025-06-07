@@ -34,5 +34,7 @@ First attempt had overflows, trying to put in bigger vars seems wrong.
 Just use correct printf format specifiers.
 Bit shifts don't seem to work.
 Answer book pdf looked like negative signs. Learned about bitwise NOT operator.
-
+To get max or min: ~0 gets all 1s. Cast to unsigned type (max unsigned).
+Shift right 1 to clear the sign bit. Cast that to signed type for max.
+(bitwise negate that for min) (unsigned maxs can skip all the extra)
 */
