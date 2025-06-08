@@ -27,4 +27,10 @@ int main() {
     return 0;
 }
 
-/* Mine works.*/
+/* Mine works.
+Theirs is cooler.
+Doesn't need contains variable. Starts like mine, but loop checks
+each char against null char and a match. On loop exit, if the
+char is null, it's no match and add, otherwise it's a match, delete.
+Rest is the same.
+*/
