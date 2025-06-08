@@ -49,5 +49,8 @@ int hexcharval(char c) {
 
 /*
 First try. Getting negative numbers. Fixed errors in hexcharval logic.
-
+Seems to work with basic test.
+Book answer: theirs works with 0 and no x, which would be octal?
+doesn't use extra function, checks for non hex characters. Ends loop
+by failing the non hex character test, doesn't have to check for /0
 */
