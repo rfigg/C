@@ -9,28 +9,19 @@ if not a '-', copy char
 
 void expand(char s[], char t[]) {
     int i, j;
-    char p, n;
+    char c;
 
-    for (i = j = 0; s[i] != '\0'; i++) {
-        if (s[i] != '-')   // If not a dash, copy the char
-            t[j++] = s[i];
-        else if (i == 0)    // case of leading char is a dash
-            t[j++] = '-';
-        else {
-            p = s[i-1]; // store char before and after dash for ease
-            n = s[i+1];
-            if (p < n)  // if correct order and at least sequential
-                if ((p >= 'a' && p <= 'z' && n >= 'a' && n <= 'z') || // both chars low case
-                    (p >= 'A' && p <= 'Z' && n >= 'A' && n <= 'Z') ||  // both upper case
-                    (p >= '0' && p <= '9' && n >= '0' && n <= '9')) // both digits
-                    while (++p < n)     // increment p and add until n
-                        t[j++] = p;     // add char to t and icrement dest
-                else
-                    t[j++] = '-';       // p < n but not in same range 
-            else       // if chars on either side not in same range or low-high
-                t[j++] = '-';             // p > n
-        }
-    }
+    i = j = 0;
+    while ((c = s[i++]) != '\0')    // put s[i] in c, advance i 
+        if (s[i] == '-' && s[i+1] >= c) {   // check dash and next char. Will accept a-a?
+            i++;
+            while (c < s[i])
+                t[j++] = c++;
+        } else
+            t[j++] = c;
     t[j] = '\0';
 }
-
+/* Mine works, theirs uses one less char, many less comparisons, some similar logic.
+They don't check for chars on either side of dash being in same range, just less than.
+Clever use of one char variable, i, and i+1 to check dash.
+*/
