@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include <string.h>
+#define abs(x) ((x) < 0 ? -(x) : (x))
 
 /* Why does their function fail on largest negative 2's complement number?
 n = -n would overflow?
@@ -9,20 +11,30 @@ void reverse(char s[]);
 
 void itoa(int n, char s[]) {
     int i, sign;
-    unsigned u;
 
-    if ((sign = n) < 0)
-        u = (unsigned)-n;
-    else
-        u = (unsigned)n;
+    sign = n;
     i = 0;
     do {
-        s[i++] = u % 10 + '0';
-    } while ((u /= 10) > 0);
+        s[i++] = abs(n % 10) + '0'; // abs on each digit avoids n = -n problem
+    } while ((n /= 10) != 0); // test changed, neg numbers don't work with abs (worked with mine) 
     if (sign < 0)
         s[i++] = '-';
     s[i] = '\0';
     reverse(s);
+}
+
+/*
+Mine works. Theirs avoids the unsigned casting and uses a cool #define absolute function thing.
+Similar steps otherwise, changes test after /= to != instead of > to avoid infinite loop with negative.
+*/
+
+int main() {
+    int n = -53848;
+    char s[1000];
+
+    itoa(n, s);
+    printf("%d becomes %s\n", n, s);
+    return 0;
 }
 
 void reverse(char s[]) {
