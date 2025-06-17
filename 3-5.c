@@ -10,8 +10,8 @@ get sign
 make n positive
 do while through writing digits in reverse
 write sign
-reverse
 terminate
+reverse
 */
 
 void itob(int n, char s[], int b) {
@@ -31,6 +31,11 @@ void itob(int n, char s[], int b) {
     s[i] = '\0';
     reverse(s);
 }
+
+/* Mine apparently works.
+Theirs ignores the 2s complement bug from last question, goes back to n = -n.
+Also they simplify if else into a conditional (ternary) operator. Leaving it.
+*/
 
 int main() {
     char s[1000];
