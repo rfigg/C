@@ -24,6 +24,11 @@ void itoa(int n, char s[], int minwidth) {
     reverse(s);
 }
 
+/*
+We swapped again! They went 2s complement safe using abs(x), I didn't. 
+Otherwise identical changes. Leaving again.
+*/
+
 int main() {
     int n = 12345;
     char s[1000];
