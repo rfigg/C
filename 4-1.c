@@ -15,3 +15,12 @@ int strrindex(char s[], char t[])
     }
     return i;
 }
+
+/* My try is basically identical to their 1st solution.
+They have an efficient 2nd solution, mostly the same but the loop
+for (i = strlen(s) - strlen(t); i >= 0; i--)
+starts at last possible position that could fit a match, and goes
+backwards through characters until reaching start of string. It
+returns immediately without extra variable, or returns -1 at end.
+*/
+
