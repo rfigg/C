@@ -19,7 +19,7 @@ double atof(char s[])
         if (s[i] == '-' || s[i] == '+') // not sure there would be a e+123 but here it is 
             i++;
         for (e = 0; isdigit(s[i]); i++)
-            e = 10 * e + (e - '0');
+            e = 10 * e + (s[i]- '0');
         e *= esign;             // make e neg or pos. could factor this differently into loop conditions
         while (e != 0)          // count down or up until exponent is zero
             if (e > 0) {        // positive, divide power by 10 to move decimal right, bigger num
@@ -35,4 +35,9 @@ double atof(char s[])
 
 /* Think I can just adjust power to account for e notation. Larger power in denominator
 means smaller value. Power times ten divides final value by ten.
+Error in e = 10... line
+They don't need esign variable. They assign val = sign * val / power before e stuff, reuse
+sign variable for e. Then they can adjust val in direction of e instead of power opposite e.
+Also as predicted use e sign as conditional, with one of two while loops inside.
+Simple return val. Otherwise pretty close.
 */
