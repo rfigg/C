@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define MAXOP 100
 #define NUMBER '0'
@@ -22,8 +23,8 @@ int main()
     */
     case '%':
         op2 = pop();
-        if (op2 != 0)
-            push(pop() % op2);
+        if (op2 != 0.0) // need to specify float
+            push(fmod(pop(), op2));  // can't just use % on floats. math.h has float remainder function fmod
         else
             printf("error: divide by zero modulus!\n");
         break;
@@ -36,20 +37,22 @@ int main()
 
 int getop(char s[])
 {
-    int i, c, sign;
+    int i, c;
 
     while ((s[0] = c = getch()) == ' ' || c == '\t')
         ;
     s[1] = '\0';
-    if (c == '-') {       // set sign variable, consume - char
-        sign = -1;
-        c = getch();
-    } else {              // any char other than -
-        sign = 1;
-    }
-    if (!isdigit(c) && c != '.')
-        return c;
     i = 0;
+    if (!isdigit(c) && c != '.' && c != '-')
+        return c;
+    if (c == '-')
+        if (isdigit(c = getch()) || c == '.')
+            s[++i] = c;
+        else {
+            if (c != EOF)
+                ungetch(c);
+            return '-';
+        }
     if (isdigit(c))
         while (isdigit(s[++i] = c = getch()))
             ;
@@ -61,4 +64,8 @@ int getop(char s[])
         ungetch(c);
     return NUMBER;
 }
-    
+/* Theirs doesn't need sign variable. They set i to zero before checking not a number,
+extend that check to include -. They check past - to see if it's a number, preserve - if not
+by ungetting that next char. Important distinction I missed - minus op vs neg number.
+*/
+
