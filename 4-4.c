@@ -2,45 +2,87 @@
 2. dulpicate it 3. swap top 2 elements 4. Clear the stack
 */
 
-#define MAXVAL 100
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+#define MAXOP 100
+#define NUMBER '0'
+
+int getop(char []);
+void push(double);
+double pop(void);
+void clear(void);
 
 int sp = 0;
-double val[MAXVAL];
 
-/* Print top element of stack without popping it */
-void printtop(void)
+int main()
 {
-    if (sp > 0)
-        printf("Top element of the stack is: %g\n", val[sp]);
-    else
-        printf("Stack is empty, nothing to see.\n");
+    int type;
+    double op1, op2;
+    char s[MAXOP];
+
+    while ((type = getop(s)) != EOF) {
+        switch (type) {
+        case NUMBER:
+            push(atof(s));
+            break;
+        case '+':
+            push(pop() + pop());
+            break;
+        case '*':
+            push(pop() * pop());
+            break;
+        case '-':
+            op2 = pop();
+            push(pop() - op2);
+            break;
+        case '/':
+            op2 = pop();
+            if (op2 == 0.0)
+                printf("No can do, divide by zero.\n");
+            else
+                push(pop() / op2);
+            break;
+        case '?':       // They use this to print top spot without popping
+            op2 = pop();
+            printf("\t%.8g\n", op2);
+            push(op2);
+            break;
+        case 'c':
+            clear();
+            break;
+        case 'd':
+            op1 = pop();
+            push(op1);
+            push(op1);
+            break;
+        case 's':
+            op2 = pop();
+            op1 = pop();
+            push(op2);
+            push(op1);
+            break;
+        case '\n':
+            printf("\t%.8g\n", pop());
+            break;
+        default:
+            printf("Unknown command: %s\n", s);
+            break;
+        }
+    }
+    return 0;
 }
 
-/* Duplicate the stack */
-void dupestack(double dest[]) // not sure you can do this
+void clear(void)
 {
-    int i;
-    
-    for (i = 0; i < sp; i++)
-        dest[i] = val[i];
-}
-
-/* Swap top two elements of stack */
-void swaptop2(void)
-{
-    double s, t;
-
-    if (sp > 1) {   // at least two elements
-        t = pop();
-        s = pop();
-        push(t);
-        push(s);
-    } else
-        printf("Need at least 2 in stack to swap.\n");
-}
-
-/* Clear the stack */
-void clearstack(void) {
     sp = 0;
 }
+
+/* Misunderstood problem. They wanted commands added to the polish calc
+like operations, inline in that switch statement. Only use push, pop, in main
+so not accessing sp or val. Their clear stack is like mine. Logic of swap is the same.
+Misunderstood duplicate, they want to dupe top stack item and push, not copy whole stack. 
+print top uses ? command and just pops, prints, pushes.
+*/
 
