@@ -2,6 +2,7 @@
 Should it know about buf and bufp, or just use ungetch?
 Try both ways?
 */
+#include <stdio.h>
 
 #define BUFSIZE 100
 
@@ -53,3 +54,16 @@ void ungets(char s[]) {
     return;
 }
 
+/* Their version uses string helper function and ungetch, doesn't care if it doesn't fit (pop and push handle error) */
+#include <string.h>
+
+void ungets2(char s[]) {
+    int len = strlen(s);
+    void ungetch(int);
+
+    while (len > 0) {
+        ungetch(s[--len]);
+    }
+}
+
+int main() {} // to link
