@@ -34,3 +34,8 @@ int main()
     return 0;
 }
 
+/* Their version declares temp at top of getch, has only 1 return, but
+zeroes buf unnecessarily when buf alredy equals 0.
+They do give error when adding past 1 char, instead of just replacing buf.
+Leaving as is.
+*/
