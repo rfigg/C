@@ -13,7 +13,8 @@ int main()
 int getop(char s[])
 {
     int i, c;
-    static char lastchar = 0;   // one char buffer, 0 if no last char stored
+    static int lastchar = 0;   // one char buffer, 0 if no last char stored
+    // change to int, convention to handle EOF values, etc
 
     if (lastchar == 0)          // get first char from buffer or getch()
         c = getch();
