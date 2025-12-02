@@ -29,8 +29,8 @@ void myitoa(char s[], int i)
 
     s[x++] = (abs(i % 10) + '0');
 
-    if (i / 10)
-        s[x] = '\0';
+    //if (!(i / 10))  // Guess it's evaluating false for negatives
+    s[x] = '\0';
 
     return;
 }
@@ -46,6 +46,19 @@ int main()
 
     myitoa(result, -1);
     printf("Result: %s\n", result);
+    
+    myitoa(result, -531);
+    printf("Result: %s\n", result);
 
+    myitoa(result, 1);
+    printf("Result: %s\n", result);
+    
+    myitoa(result, 143256);
+    printf("Result: %s\n", result);
     return 0;
 }
+
+/* -1 is printing as -10. Confirmed for other single digits. One change now it's not writing null char on multi digit negatives.
+It was bad logic of "if (!(i/10))"
+Ended up almost the same as theirs, no need to change. They use abs(x) mod 10 rather than mod then absolute. Should be the same?
+*/
