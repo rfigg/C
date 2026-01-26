@@ -25,7 +25,7 @@ int main ()
 
 int getint(int *pn)
 {
-	int c, sign;
+	int c, sign, d;
 
 	while (isspace(c = getch()))
 		;
@@ -34,11 +34,15 @@ int getint(int *pn)
 		return 0;
 	}
 	sign = (c == '-') ? -1 : 1;
-	if (c == '+' || c == '-')
+	if (c == '+' || c == '-') {
+        d = c;  // save sign char
 		if (!isdigit(c = getch())) {	// not a digit after + or -
-			ungetch(c);
-			return 0;
+            if (c != EOF)
+                ungetch(c);     // push back non-digit
+			ungetch(c);         // push back sign char
+			return d;           // return sign char as signal to caller
 		}
+    }
 	for (*pn = 0; isdigit(c); c = getch())
 		*pn = *pn * 10 + (c - '0');
 	*pn *= sign;
@@ -52,13 +56,17 @@ char buf[BUFSIZE]; /* buffer for ungetch */
 int bufp =0; /* next free position in buf */
 int getch(void) /* get a (possibly pushed back) character */
 {
-return (bufp > 0) ? buf[--bufp] : getchar();
+    return (bufp > 0) ? buf[--bufp] : getchar();
 }
-void ungetch(int c) /* push character back on input */ {
-if (bufp >= BUFSIZE)
-printf("ungetch: too many characters\n");
-else
-buf[bufp++] = c;
+void ungetch(int c) /* push character back on input */ 
+{
+    if (bufp >= BUFSIZE)
+        printf("ungetch: too many characters\n");
+    else
+        buf[bufp++] = c;
 }
 /* Seems to infinite loop on any non number besides + or -.
  * Used getchar instead of getch in my addition, no change */
+/* Changed to be like theirs, pushing back sign char. Infinite loop
+still happening, guessing it's in my main or copy of getch/ungetch */
+
