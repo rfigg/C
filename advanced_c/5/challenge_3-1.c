@@ -1,5 +1,5 @@
 // Share variable between files
-// This calls display to show the interator
+// This calls display to show the iterator
 // Started with iteration in display, changed to iterate here
 
 int lp_counter = 0;
