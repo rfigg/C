@@ -7,22 +7,28 @@
 #include <complex.h>
 
 int main() {
-    double complex a = 2.0 + 3.0 * I;
-    //a *= cimag(a);
-    //printf("%.2f%+.2fi\n", creal(a), cimag(a));
-    printf("%.2f%+.2fi\n", creal(a), cimag(a) * cimag(a));
+    double complex a = I * I;
+    printf("%.2f%+.2fi\n", creal(a), cimag(a));
 
-    double complex b = 2.0 + 3.0 * I;
-    printf("%.2f%+.2fi\n", creal(b), pow(cimag(b), 2));
+    double complex b = pow(I, 2);
+    printf("%.2f%+.2fi\n", creal(b), cimag(b));
 
     const double PI = acos(-1);
-    double complex c = I * PI;
+    double complex c = exp(I * PI);
     printf("%.2f%+.2fi\n", creal(c), cimag(c));
 
     double complex d = 1 + 2*I;
-    double complex e = conj(d);
-    printf("%.2f%+.2fi\n", creal(e), cimag(e));
+    double complex e = 1 - 2*I;
+    printf("%.2f%+.2fi\n", creal(d*e), cimag(d*e));
 
     return 0;
 }
+
+/*
+Results:
+My guess was more complicated than what he wanted.
+Euler's needed the exp function, ok? Looking up, this raises e to the power
+Last wanted to started with the 2 conjugates and multiply,
+also not specified in directions.
+*/
 

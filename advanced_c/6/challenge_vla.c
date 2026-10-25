@@ -18,5 +18,13 @@ int main() {
     }
 
     printf("The total was %d\n", total);
+    
+    return 0;
 }
+
+/*
+Results:
+Forgot return value
+Otherwise the same except for he used two identical for loops instead of one
+*/
 

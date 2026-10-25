@@ -16,10 +16,9 @@ int main () {
     printf("Enter size of array: ");
     scanf("%d", &s);
 
-    printf("%d\n", s);
-
     x = malloc( sizeof(struct myflex) + s*sizeof(int) );
     
+    x->size = s;
     for (int i = 0; i < s; i++) {
         //x->data[i] = 42;
         x->data[i] = 101+i;
@@ -33,3 +32,11 @@ int main () {
     return 0;
 }
 
+/*
+Results:
+He starts by setting struct pointer to NULL and initializing s to 0
+He uses malloc.h instead of stlib.h, which this clang didn't like
+He malloc'd in 2 steps with an extra size_t var
+I didn't set the size field of the struct
+My population of the array with numbers is more fun.
+*/
