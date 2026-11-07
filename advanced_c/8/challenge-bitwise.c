@@ -4,7 +4,7 @@ Do some bitwise operations and display results in binary
 
 #include <stdio.h>
 
-int decimalToBinary(int dec);
+long long decimalToBinary(int dec);
 
 int main()
 {
@@ -17,22 +17,22 @@ int main()
 
     //printf("%d, %d\n", decimalToBinary(a), decimalToBinary(b));
 
-    printf("Result of ~ on %d(%d) is: %d\n", a, decimalToBinary(a), decimalToBinary(~a));
-    printf("Result of ~ on %d(%d) is: %d\n", b, decimalToBinary(b), decimalToBinary(~b));
+    printf("Result of ~ on %d(%lld) is: %lld\n", a, decimalToBinary(a), decimalToBinary(~a));
+    printf("Result of ~ on %d(%lld) is: %lld\n", b, decimalToBinary(b), decimalToBinary(~b));
 
-    printf("%d & %d: %d\n", decimalToBinary(a), decimalToBinary(b), decimalToBinary(a & b));
-    printf("|: %d\n", decimalToBinary(a | b));
-    printf("^: %d\n", decimalToBinary(a ^ b));
+    printf("%lld & %lld: %lld\n", decimalToBinary(a), decimalToBinary(b), decimalToBinary(a & b));
+    printf("|: %lld\n", decimalToBinary(a | b));
+    printf("^: %lld\n", decimalToBinary(a ^ b));
 
-    printf("%d >> 2: %d\n", decimalToBinary(a), decimalToBinary(a >> 2));
-    printf("%d << 2: %d\n", decimalToBinary(b), decimalToBinary(b << 2));
+    printf("%lld >> 2: %lld\n", decimalToBinary(a), decimalToBinary(a >> 2));
+    printf("%lld << 2: %lld\n", decimalToBinary(b), decimalToBinary(b << 2));
 
     return 0;
 }
 
-int decimalToBinary(int dec)
+long long decimalToBinary(int dec)
 {
-    int bin = 0;
+    long long bin = 0;
     int place = 1;
 
     while (dec != 0)
@@ -44,4 +44,10 @@ int decimalToBinary(int dec)
 
     return bin;
 }
+
+/* Results:
+Forgot about returning long longs to accomodate long binary numbers
+He used lots of local vars where I called function in printf
+Same otherwise
+*/
 
