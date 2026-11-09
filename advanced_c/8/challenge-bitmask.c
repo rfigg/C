@@ -18,17 +18,19 @@ int main()
         scanf("%d", &bit);
     }
 
-   // check and print bit
-   printf("The %d bit is set to %d\n", bit, (num >> bit) & 1);
+    // check and print bit
+    printf("The %d bit is set to %d\n", bit, (num >> bit) & 1);
 
-   // set bit
-   int newNum = (1 << bit) | num;
-   printf("Bit set, supposedly.\n");
+    // set bit
+    int newNum = (1 << bit) | num;
+    printf("Bit set, supposedly.\n");
 
-   // print old and new num
-   printf("Number before setting the %d bit: %d\n", bit, num);
-   printf("Number after setting the %d bit: %d\n", bit, newNum);
+    // print old and new num
+    printf("Number before setting the %d bit: %d\n", bit, num);
+    printf("Number after setting the %d bit: %d\n", bit, newNum);
         
     return 0;
 }
+
+/* Results
 
