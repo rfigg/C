@@ -53,3 +53,8 @@ int main()
     return 0;
 }
 
+/* Result:
+Similar to mine, he hardcodes the number of lines instead of the ultimate width.
+Has 3 variables and similar number of labels. Mine requires an odd number where
+his will work with any.
+*/

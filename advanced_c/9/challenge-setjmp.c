@@ -11,10 +11,14 @@ void error_recovery();
 
 int main()
 {
-    int i = setjmp(j);
-        
-    if (i == 0)
-        error_recovery();
+    while(1) {
+        if (setjmp(j)) {
+            printf("I'm in main!\n");
+            break;
+        } else {
+            error_recovery();
+        }
+    }
 
     return 0;
 }
@@ -24,3 +28,7 @@ void error_recovery()
     printf("Error!\n");
     longjmp(j, 1);
 }
+
+/* Result:
+Ok, pretty much does the same as mine but from within a forever loop.
+*/
