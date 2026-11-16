@@ -57,3 +57,12 @@ int main(int argc, char *argv[])
         fclose(fp);
     return 0;
 }
+
+/* Results:
+He checks for more than 1 command line argument, exits and explains usage.
+He starts char and word counts at 1, does one getc before while loop.
+Also prints out each value minus one.
+He manually checks ch agianst space and newline but not tab, instead of isspace()
+Also he just adds to word count with each space, and add to char count each
+non space. Doesn't seem like it would work with multiple spaces?
+*/
