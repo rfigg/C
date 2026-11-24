@@ -39,3 +39,6 @@ int varSum(int count, ...)
     return s;
 }
 
+/* Results:
+Basically identical besides names and output formatting.
+*/
